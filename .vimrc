@@ -1,4 +1,3 @@
-" Mark Edits
 execute pathogen#infect()
 
 set nocompatible
@@ -31,6 +30,7 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'dracula/vim'
+Plugin 'micha/vim-colors-solarized'
 Plugin 'christoomey/vim-tmux-navigator'
 
 " html / templates
@@ -338,7 +338,11 @@ endif
 " Mark Edits
 let macvim_skip_colorscheme=1
 let g:airline_powerline_fonts = 1
-colo dracula
+let g:airline_theme='solarized'
+syntax enable
+set background=dark
+colorscheme solarized
+let g:solarized_termcolors=256
 set clipboard=unnamed
 " autocmd VimEnter * NERDTree | wincmd p
 set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
