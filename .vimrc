@@ -1,60 +1,45 @@
-execute pathogen#infect()
-
-set nocompatible
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-filetype plugin on
-au BufRead,BufNewFile *.ts        setlocal filetype=typescript
-set rtp+=~/.vim/bundle/typescript-tools.vim/
-
-let g:TSS = ['tss','--module','commonjs']
-if !exists("g:ycm_semantic_triggers")
-   let g:ycm_semantic_triggers = {}
-endif
-let g:ycm_semantic_triggers['typescript'] = ['.']
-set completeopt-=preview
-
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'Townk/vim-autoclose' 
-Plugin 'tpope/vim-commentary' 
-Plugin 'pangloss/vim-javascript' 
-Plugin 'tpope/vim-surround' 
-Plugin 'tpope/vim-fugitive' 
-Plugin 'scrooloose/nerdtree' 
-Plugin 'scrooloose/syntastic' 
-Plugin 'vim-airline/vim-airline' 
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'dracula/vim'
-Plugin 'micha/vim-colors-solarized'
-Plugin 'christoomey/vim-tmux-navigator'
+" Specify a directory for plugins
+call plug#begin('~/.vim/plugged')
+Plug 'Townk/vim-autoclose' 
+Plug 'tpope/vim-commentary' 
+Plug 'pangloss/vim-javascript' 
+Plug 'tpope/vim-surround' 
+Plug 'tpope/vim-fugitive' 
+Plug 'tpope/vim-abolish' 
+Plug 'scrooloose/nerdtree' 
+Plug 'scrooloose/syntastic' 
+Plug 'vim-airline/vim-airline' 
+Plug 'vim-airline/vim-airline-themes'
+Plug 'easymotion/vim-easymotion'
+Plug 'dracula/vim'
+Plug 'vimwiki/vimwiki'
+Plug 'davidhalter/jedi-vim'
+Plug 'micha/vim-colors-solarized'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
+Plug 'junegunn/fzf.vim'
 
 " html / templates
-Plugin 'mattn/emmet-vim', { 'for': 'html' } " emmet support for vim - easily create markdup wth CSS-like syntax
-Plugin 'gregsexton/MatchTag', { 'for': 'html' } " match tags in html, similar to paren support
-Plugin 'othree/html5.vim', { 'for': 'html' } " html5 support
-Plugin 'mustache/vim-mustache-handlebars' " mustach support
-Plugin 'digitaltoad/vim-jade', { 'for': ['jade', 'pug'] } " jade support
-" Plug 'juvenn/mustache.vim', { 'for': 'mustache' } " mustache support
+Plug 'mattn/emmet-vim', { 'for': 'html' } " emmet support for vim - easily create markdup wth CSS-like syntax
+Plug 'gregsexton/MatchTag', { 'for': 'html' } " match tags in html, similar to paren support
+Plug 'othree/html5.vim', { 'for': 'html' } " html5 support
+Plug 'mustache/vim-mustache-handlebars' " mustach support
+Plug 'digitaltoad/vim-jade', { 'for': ['jade', 'pug'] } " jade support
 
 " JavaScript
-Plugin 'gavocanov/vim-js-indent', { 'for': 'javascript' } " JavaScript indent support
-Plugin 'moll/vim-node', { 'for': 'javascript' } " node support
-Plugin 'othree/yajs.vim', { 'for': 'javascript' } " JavaScript syntax plugin
-Plugin 'othree/es.next.syntax.vim', { 'for': 'javascript' } " ES6 and beyond syntax
-Plugin 'mxw/vim-jsx', { 'for': ['jsx', 'javascript'] } " JSX support
+Plug 'gavocanov/vim-js-indent', { 'for': 'javascript' } " JavaScript indent support
+Plug 'moll/vim-node', { 'for': 'javascript' } " node support
+Plug 'othree/yajs.vim', { 'for': 'javascript' } " JavaScript syntax plugin
+Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' } " ES6 and beyond syntax
+Plug 'mxw/vim-jsx', { 'for': ['jsx', 'javascript'] } " JSX support
 
 " TypeScript
 " Plug 'Quramy/tsuquyomi', { 'for': 'typescript', 'do': 'npm install' } " extended typescript support - works as a client for TSServer
 " Plug 'clausreinke/typescript-tools.vim', { 'for': 'typescript' } " typescript tools
-Plugin 'leafgarland/typescript-vim', { 'for': 'typescript' } " typescript support
+Plug 'leafgarland/typescript-vim', { 'for': 'typescript' } " typescript support
 
-call vundle#end()
-filetype plugin indent on
+call plug#end()
+
 
 " Settings {{{
 
@@ -157,10 +142,6 @@ endif
 " execute the current line of text as a shell command
 noremap      Q !!$SHELL<CR>
 
-" " Map alt-v in command-line mode to replace the commandline
-" " with the Ex command-line beneath the cursor in the buffer
-" cnoremap     <Esc>v <C-\>esubstitute(getline('.'), '^\s*\(' . escape(substitute(&commentstring, '%s.*$', '', ''), '*') . '\)*\s*:*' , '', '')<CR>
-
 " Use <C-L> to clear search highlighting as well as refresh the screen
 noremap      <silent> <C-l> :nohlsearch <bar> redraw<CR>
 inoremap     <silent> <C-l> <C-O>:nohlsearch <bar> redraw<CR>
@@ -175,94 +156,7 @@ elseif has("unix")
     imap     <F6>   <C-O>:silent !ctags -R<CR>
 endif
 
-map          <F7> :TlistTogglstToggle<CR>
-map          <F9> :Scratch<CR>
-map <C-k> :NERDTreeToggle<CR>
-
-" "}}}
-
-" " Global variables {{{
-" if has('eval')
-" let g:obviousModeInsertHi = 'gui=reverse'
-" let g:ZO_syntaxhighlight = 1
-" let g:ZO_sleepdelay = '50m'
-
-" let g:showfuncctagsbin='/usr/bin/exuberant-ctags'
-" let g:showfunc_width_pct=45
-" let g:errormarker_errorgroup = "Error"
-" let g:errormarker_warninggroup = "Todo"
-
-" "git branch info
-" let g:git_branch_status_nogit=""
-
-" endif
-" "}}}
-
-" "commands/aliases {{{
-" if has('user_commands')
-" command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
-" command! -nargs=1 -complete=help Help      :help <args>
-" command! -nargs=1 -complete=help HElp      :help <args>
-" command! -nargs=* -bar -bang Ls            :ls<bang>
-" command! -nargs=0 Noh       :noh
-" command! -nargs=0 Date      :put ='* ' . strftime('%b %d, %Y %I:%M %p')
-" command! -nargs=? -bar      Underline    :put =repeat( len('<args>') > 0 ? '<args>' : '=', len(getline('.')))
-" command! -nargs=0 Max       :let [s:lines, s:columns] = [&lines, &columns] | set lines=999 columns=999
-" command! -nargs=0 Taller    :let [s:lines, s:columns] = [&lines, &columns] |set lines=999
-" command! -nargs=0 Wider     :let [s:lines, s:columns] = [&lines, &columns] |set columns=999
-" command! -nargs=0 Restore  :let [s:lines, s:columns, &lines, &columns] = [&lines, &columns, s:lines, s:columns]
-" command! -nargs=0 Merge /^\(<\|=\|>\)\{7}\ze\(\s\|$\)/
-" endif
-" "}}}
-
-" " Autocommands {{{
-" if has('autocmd')
-" 	autocmd BufRead *.xsl,*.xslt,*.xml,*.htm,*.html,*.xsd,*.tas set filetype=xml
-"     autocmd BufRead *.java set filetype=java
-" 	autocmd FileType {xml,xslt} setlocal iskeyword=$,@,-,\:,48-57,_,128-167,224-235 
-" 	autocmd FileType {xml,xslt} setlocal noexpandtab
-
-"     " automatically re-source .vimrc after saving it
-"     augroup RE_SOURCE_ON_WRITE
-"         autocmd! BufWritePost .vimrc nested source <afile>
-"     augroup END
-" endif "has('autocmd')
-" "}}}
-
-" " Functions {{{
-" if has('eval')
-
-"     function! Urldecode(str)
-"       let retval = a:str
-"       let retval = substitute(retval, '+', ' ', 'g')
-"       let retval = substitute(retval, '%\(\x\x\)', '\=nr2char("0x".submatch(1))', 'g')
-"       return retval
-"     endfunction
-
-"     " Map F1 key to print the list of syntax items the character under the
-"     " cursor is painted with
-"     if v:version > 700
-"         function! ShowSynStack()
-"             for id in synstack(line('.'), col('.'))
-"                 echo synIDattr(id, "name")
-"             endfor
-"         endfunction
-
-"         map <F1> :call ShowSynStack()<CR>
-"     endif
-
-"     if ! exists("g:running_ReSourceVimrc") 
-"         function! ReSourceVimrc() 
-"             let g:running_ReSourceVimrc = 1
-"             let l:this_session = v:this_session
-"             source ~/.vimrc
-"             let v:this_session = l:this_session
-"             unlet g:running_ReSourceVimrc
-"             redraw | echomsg "Re-sourced .vimrc"
-"         endfunction 
-"     endif
-
-" endif
+nmap <C-I> :NERDTreeToggle<CR>
 
 
 " " Cycle between line numbers, relative numbers, no numbers
@@ -291,7 +185,6 @@ if exists('+relativenumber')
   endfunc
 endif
 
-"}}}
 
 " " File Changed Shell Handler {{{
 " " Explains what has happened when Vim notices that the file you are editing
@@ -331,32 +224,69 @@ if has('eval') && has('autocmd')
         echohl None
     endfunction
 endif
-" }}}
 
-" vim:filetype=vim sw=4 foldmethod=marker tw=78 expandtab:
-
+"===================================
 " Mark Edits
+"===================================
 let macvim_skip_colorscheme=1
 let g:airline_powerline_fonts = 1
 let g:airline_theme='solarized'
-syntax enable
 set background=dark
-colorscheme solarized
-let g:solarized_termcolors=256
-set clipboard=unnamed
-" autocmd VimEnter * NERDTree | wincmd p
+" colorscheme elflord
+colorscheme slate
+set clipboard+=unnamed
 set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
 
 let g:syntastic_javascript_checkers = ['eslint']
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" Remap leader to comma
+let mapleader=","
+
+" EasyMotion
+"""""""""""""""""""""""""""""""""""
+" <Leader>f{char} to move to {char}
+map  <Leader>f <Plug>(easymotion-bd-f)
+nmap <Leader>f <Plug>(easymotion-overwin-f)
+
+" s{char}{char} to move to {char}{char}
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Move to line
+map <Leader>L <Plug>(easymotion-bd-jk)
+nmap <Leader>L <Plug>(easymotion-overwin-line)
+
+" Move to word
+map  <Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader>w <Plug>(easymotion-overwin-w)
+
+" two character search
+nmap s <Plug>(easymotion-s2)
+nmap t <Plug>(easymotion-t2)
+
+" hjkl motions
+map <Leader>l <Plug>(easymotion-lineforward)
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map <Leader>h <Plug>(easymotion-linebackward)
+
+let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
+
+" FZF config
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
