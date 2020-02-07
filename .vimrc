@@ -19,6 +19,9 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 
+" Non-dev plugins
+" Plug 'https://github.com/twitvim/twitvim.git'
+
 " html / templates
 Plug 'mattn/emmet-vim', { 'for': 'html' } " emmet support for vim - easily create markdup wth CSS-like syntax
 Plug 'gregsexton/MatchTag', { 'for': 'html' } " match tags in html, similar to paren support
@@ -237,6 +240,8 @@ colorscheme slate
 set clipboard+=unnamed
 set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 
+let g:syntastic_python_checkers = ['flake8']
+
 let g:syntastic_javascript_checkers = ['eslint']
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -290,3 +295,5 @@ let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
+
+imap jj <Esc>
